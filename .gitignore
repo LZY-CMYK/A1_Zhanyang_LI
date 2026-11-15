@@ -1,0 +1,10 @@
+# compiled output
+out/
+*.class
+
+# OS files
+.DS_Store
+
+# extra web demo, not part of the brief
+extra-web/
+webserver.log
