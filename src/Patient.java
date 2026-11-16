@@ -21,15 +21,17 @@ public class Patient {
      */
     public Patient(String name, String phone) {
         // Validate the patient name: it must not be blank.
-        if (name == null || name.isBlank()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Patient name must not be empty.");
         }
-        // Validate the mobile: 7 to 15 digits only.
-        if (phone == null || !phone.trim().matches("\\d{7,15}")) {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        // Validate the mobile: 7 to 15 digits only, checked character by character.
+        if (trimmedPhone == null || !isDigitsOnly(trimmedPhone)
+                || trimmedPhone.length() < 7 || trimmedPhone.length() > 15) {
             throw new IllegalArgumentException("Phone must contain 7 to 15 digits.");
         }
         this.name = name.trim();
-        this.phone = phone.trim();
+        this.phone = trimmedPhone;
     }
 
     public String getName() {
@@ -52,9 +54,10 @@ public class Patient {
             return true;
         }
         // A different type is never equal.
-        if (!(o instanceof Patient other)) {
+        if (!(o instanceof Patient)) {
             return false;
         }
+        Patient other = (Patient) o;
         // Patients are matched by mobile number.
         return Objects.equals(phone, other.phone);
     }
@@ -62,5 +65,23 @@ public class Patient {
     @Override
     public int hashCode() {
         return Objects.hash(phone);
+    }
+
+    /**
+     * Checks that every character in the text is a digit, without using a regular expression.
+     *
+     * @param text text to check
+     * @return true if the text is non-null, non-empty and all digits
+     */
+    private static boolean isDigitsOnly(String text) {
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+        for (int i = 0; i < text.length(); i++) {
+            if (!Character.isDigit(text.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

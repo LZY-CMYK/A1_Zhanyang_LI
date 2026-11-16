@@ -21,7 +21,7 @@ public class Specialist extends HealthProfessional {
         // Let the base class validate the shared ID, name and working days.
         super(id, name, availableDays);
         // Specialist-specific rule: the clinical field must not be blank.
-        if (field == null || field.isBlank()) {
+        if (field == null || field.trim().isEmpty()) {
             throw new IllegalArgumentException("Specialty field must not be empty.");
         }
         this.field = field.trim();

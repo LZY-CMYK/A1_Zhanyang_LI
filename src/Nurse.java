@@ -21,7 +21,7 @@ public class Nurse extends HealthProfessional {
         // Let the base class validate the shared ID, name and working days.
         super(id, name, availableDays);
         // Nurse-specific rule: the assigned ward must not be blank.
-        if (ward == null || ward.isBlank()) {
+        if (ward == null || ward.trim().isEmpty()) {
             throw new IllegalArgumentException("Ward must not be empty.");
         }
         this.ward = ward.trim();

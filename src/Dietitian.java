@@ -21,7 +21,7 @@ public class Dietitian extends HealthProfessional {
         // Let the base class validate the shared ID, name and working days.
         super(id, name, availableDays);
         // Dietitian-specific rule: the dietary focus must not be blank.
-        if (dietaryFocus == null || dietaryFocus.isBlank()) {
+        if (dietaryFocus == null || dietaryFocus.trim().isEmpty()) {
             throw new IllegalArgumentException("Dietary focus must not be empty.");
         }
         this.dietaryFocus = dietaryFocus.trim();
